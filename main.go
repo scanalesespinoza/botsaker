@@ -1,8 +1,9 @@
 package main
 
 import (
+	"log"
     "net/http"
-
+	"github.com/gin-gonic/autotls"
     "github.com/gin-gonic/gin"
 )
 
@@ -17,11 +18,15 @@ var users = []user{
     {id: "2", name: "Jeru", level: "Gerry Mulligan", exp: 17.99},
     {id: "3", name: "Sarah Vaughan and Clifford Brown", level: "Sarah Vaughan", exp: 39.99},
 }
+
+func main() {
 router := gin.Default()
 router.GET("/users", getusers)
 router.POST("/users", postusers)
 
 router.Run("0.0.0.0:8080")
+
+log.Fatal(autotls.Run(r, "botsaker.battlebit.org", "botsaker2.battlebit.org"))
 }
 func getusers(c *gin.Context) {
     c.IndentedJSON(http.StatusOK, users)
@@ -40,4 +45,5 @@ func postusers(c *gin.Context) {
     //c.IndentedJSON(http.StatusCreated, newuser)
 	body, _ := ioutil.ReadAll(c.Request.Body)
     println(string(body))
+	c.String(http.StatusOK, "pong")
 }
