@@ -1,6 +1,7 @@
 package main
 
 import (
+	"ioutil"
 	"log"
     "net/http"
 	"github.com/gin-gonic/autotls"
