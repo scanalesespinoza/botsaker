@@ -23,10 +23,9 @@ func main() {
 router := gin.Default()
 router.GET("/users", getusers)
 router.POST("/users", postusers)
-
 router.Run("0.0.0.0:8080")
 
-log.Fatal(autotls.Run(r, "botsaker.battlebit.org", "botsaker2.battlebit.org"))
+log.Fatal(autotls.Run(router, "botsaker.battlebit.org", "botsaker2.battlebit.org"))
 }
 func getusers(c *gin.Context) {
     c.IndentedJSON(http.StatusOK, users)
