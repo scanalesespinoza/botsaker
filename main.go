@@ -1,7 +1,7 @@
 package main
 
 import (
-	"ioutil"
+	"io/ioutil"
 	"log"
     "net/http"
 	"github.com/gin-gonic/autotls"
@@ -24,7 +24,6 @@ func main() {
 router := gin.Default()
 router.GET("/users", getusers)
 router.POST("/users", postusers)
-router.Run("0.0.0.0:8080")
 
 log.Fatal(autotls.Run(router, "botsaker.battlebit.org", "botsaker2.battlebit.org"))
 }
@@ -32,7 +31,7 @@ func getusers(c *gin.Context) {
     c.IndentedJSON(http.StatusOK, users)
 }
 func postusers(c *gin.Context) {
-    var newuser user
+    //var newuser user
 
     // Call BindJSON to bind the received JSON to
     // newuser.
