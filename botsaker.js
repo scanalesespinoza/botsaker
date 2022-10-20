@@ -73,7 +73,7 @@ tiktokLiveConnection.on('chat', data => {
 
 
     // send a new message
-    ws.send(`hello again: ${data.uniqueId}`);
+    socket.send(`hello again: ${data.uniqueId}`);
 })
 
 tiktokLiveConnection.on('gift', data => {
