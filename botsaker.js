@@ -26,7 +26,15 @@ BgMagenta = "\x1b[45m"
 BgCyan = "\x1b[46m"
 BgWhite = "\x1b[47m"
 
+// send message to a web socket nodejs?
+const websocket = require('ws');
 
+const socket = new websocket('ws://localhost:8080/chat/botsaker')
+
+const connections = [];
+socket.on('connection', ws => {
+    connections.push(ws);
+});
 const { WebcastPushConnection } = require('tiktok-live-connector');
 
 // Username of someone who is currently live
@@ -62,23 +70,10 @@ tiktokLiveConnection.connect().then(state => {
 tiktokLiveConnection.on('chat', data => {
     console.log(BgGreen,`${data.uniqueId} (userId:${data.userId}) writes: ${data.comment}`);
     console.log(Reset,'')
-    // send message to a web socket nodejs?
-    const websocket = require('ws');
 
-    const socket = new websocket('ws://localhost:8080/chat/botsaker')
 
-    const connections = [];
-    socket.on('connection', ws => {
-        connections.push(ws);
-    });
-
-    // send a new message to every connection once per second
-    setInterval(() => {
-    const date = new Date();
-    for (const ws of connections) {
-        ws.send(`hello again: ${date}`);
-    }
-    }, 1000);
+    // send a new message
+    ws.send(`hello again: ${data.uniqueId}`);
 })
 
 tiktokLiveConnection.on('gift', data => {
