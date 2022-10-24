@@ -29,16 +29,17 @@ BgWhite = "\x1b[47m"
 // send message to a web socket nodejs?
 const websocket = require('ws');
 
-const socket = new websocket('ws://localhost:8080/chat/botsaker')
+const socket = new websocket('ws://localhost:8080/chat/TikTokUser')
 
 const connections = [];
 socket.on('connection', ws => {
     connections.push(ws);
+    console.log('CONNECTED TO BATTLECHAT');
 });
 const { WebcastPushConnection } = require('tiktok-live-connector');
 
 // Username of someone who is currently live
-let tiktokUsername = "viral_jhonsly";
+let tiktokUsername = "sergio.sce";
 
 // Create a new wrapper object and pass the username
 let tiktokLiveConnection = new WebcastPushConnection(tiktokUsername, {
@@ -73,7 +74,9 @@ tiktokLiveConnection.on('chat', data => {
 
 
     // send a new message
-    socket.send(`hello again: ${data.uniqueId}`);
+    socket.send(`${data.uniqueId}|_|${data.comment}|_|${data.profilePictureUrl}`);
+    console.log('MESSAGE SENT');
+    
 })
 
 tiktokLiveConnection.on('gift', data => {
@@ -99,6 +102,7 @@ tiktokLiveConnection.on('social', data => {
 })
 
 tiktokLiveConnection.on('emote', data => {
+    
     console.log('emote received', data);
 })
 
